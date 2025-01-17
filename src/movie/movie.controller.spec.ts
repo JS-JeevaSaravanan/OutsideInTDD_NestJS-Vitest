@@ -2,6 +2,7 @@ import { MovieController } from './movie.controller';
 import { vi } from 'vitest';
 import { MovieService } from './movie.service';
 import { Test, TestingModule } from '@nestjs/testing';
+import { MovieGateway } from './movie.gateway';
 
 describe('MovieController', () => {
   let controller: MovieController;
@@ -9,10 +10,18 @@ describe('MovieController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        MovieService,
+        {
+          provide: MovieGateway,
+          useValue: {},
+        },
+      ],
       controllers: [MovieController],
     }).compile();
 
     controller = module.get<MovieController>(MovieController);
+    movieService = module.get<MovieService>(MovieService);
   });
 
   it('should be defined', () => {
