@@ -37,11 +37,11 @@ describe('movie aggregator', () => {
 
   it.only('given a movie name, gives oldness of the movie', async () => {
     const movieName = 'batman';
-    const reseponse = await request(app.getHttpServer()).get(
+    const response = await request(app.getHttpServer()).get(
       `/movies/${movieName}/oldness`,
     );
-    expect(reseponse.status).toBe(200);
-    expect(reseponse.body).toBeDefined();
-    expect(reseponse.body.oldness).toBe('90s');
+    expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
+    expect(response.body.oldness).toBe('90s');
   });
 });
