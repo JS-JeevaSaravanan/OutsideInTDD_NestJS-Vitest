@@ -20,6 +20,7 @@ describe('movie aggregator', () => {
             meta: {
               releasedOn: '1999-10-12T10:15:46.752Z',
             },
+            money: { made: 12, budget: 11 },
           },
         },
       },
@@ -43,5 +44,15 @@ describe('movie aggregator', () => {
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(response.body.oldness).toBe('90s');
+  });
+
+  it.only('given a movie name, gives profitability of the movie', async () => {
+    const movieName = 'batman';
+    const response = await request(app.getHttpServer()).get(
+      `/movies/${movieName}/profitability`,
+    );
+    expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
+    expect(response.body.profitability).toBe('PROFITABLE');
   });
 });

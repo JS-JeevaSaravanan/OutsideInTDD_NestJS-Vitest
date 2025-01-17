@@ -30,13 +30,15 @@ describe('MovieService', () => {
   it('given a movie name, it should call the movie gateway', async () => {
     // given
     const movieName = 'fake';
-    gateway.getMovie = vi.fn().mockImplementationOnce(() => Promise.resolve({
-      data: {
-        meta: {
-          releasedOn: '2018-10-12T10:15:46.752Z'
-        }
-      }
-    }));
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          meta: {
+            releasedOn: '2018-10-12T10:15:46.752Z',
+          },
+        },
+      }),
+    );
 
     // when
     const response = await service.getOldness(movieName);
@@ -47,13 +49,15 @@ describe('MovieService', () => {
   it('should identify new movie', async () => {
     // given
     const movieName = 'fake';
-    gateway.getMovie = vi.fn().mockImplementationOnce(() => Promise.resolve({
-      data: {
-        meta: {
-          releasedOn: '2018-10-12T10:15:46.752Z'
-        }
-      }
-    }));
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          meta: {
+            releasedOn: '2018-10-12T10:15:46.752Z',
+          },
+        },
+      }),
+    );
 
     // when
     const response = await service.getOldness(movieName);
@@ -65,13 +69,15 @@ describe('MovieService', () => {
   it('should identify old movie', async () => {
     // given
     const movieName = 'fake';
-    gateway.getMovie = vi.fn().mockImplementationOnce(() => Promise.resolve({
-      data: {
-        meta: {
-          releasedOn: '1989-10-12T10:15:46.752Z'
-        }
-      }
-    }));
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          meta: {
+            releasedOn: '1989-10-12T10:15:46.752Z',
+          },
+        },
+      }),
+    );
 
     // when
     const response = await service.getOldness(movieName);
@@ -83,13 +89,15 @@ describe('MovieService', () => {
   it('should identify 90s movie', async () => {
     // given
     const movieName = 'fake';
-    gateway.getMovie = vi.fn().mockImplementationOnce(() => Promise.resolve({
-      data: {
-        meta: {
-          releasedOn: '1999-10-12T10:15:46.752Z'
-        }
-      }
-    }));
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          meta: {
+            releasedOn: '1999-10-12T10:15:46.752Z',
+          },
+        },
+      }),
+    );
 
     // when
     const response = await service.getOldness(movieName);
@@ -97,5 +105,49 @@ describe('MovieService', () => {
     // then
     expect(gateway.getMovie).toHaveBeenCalledWith('fake');
     expect(response.oldness).toEqual('90s');
+  });
+
+  it('should identify profitable movie', async () => {
+    // given
+    const movieName = 'fake';
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          money: {
+            made: 10,
+            budget: 5,
+          },
+        },
+      }),
+    );
+
+    // when
+    const response = await service.getProfitability(movieName);
+
+    // then
+    expect(gateway.getMovie).toHaveBeenCalledWith('fake');
+    expect(response.profitability).toEqual('PROFITABLE');
+  });
+
+  it('should identify NON-PROFITABLE movie', async () => {
+    // given
+    const movieName = 'fake';
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          money: {
+            made: 5,
+            budget: 10,
+          },
+        },
+      }),
+    );
+
+    // when
+    const response = await service.getProfitability(movieName);
+
+    // then
+    expect(gateway.getMovie).toHaveBeenCalledWith('fake');
+    expect(response.profitability).toEqual('NON-PROFITABLE');
   });
 });

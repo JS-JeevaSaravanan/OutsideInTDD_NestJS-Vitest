@@ -11,3 +11,15 @@ GET http://localhost:3000/movies/batman/oldness
 #90s: 90 to 2000
 #new: 2000 to now
 #}
+
+
+### profitability
+GET http://localhost:3000/movies/batman/profitability
+
+#{
+#
+#profitability : PROFITABLE
+#
+# budget - made > 0 means PROFITABLE, else NON-PROFITABLE
+# budget - made <= 0 means NON-PROFITABLE , else PROFITABLE 
+#}

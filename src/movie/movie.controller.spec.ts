@@ -41,4 +41,20 @@ describe('MovieController', () => {
     expect(movieService.getOldness).toHaveBeenCalledWith('fakeMovie');
     expect(response).toEqual('old');
   });
+
+  it('given a movie name, it should give profitability', async () => {
+    // given
+    const movieName = 'fakeMovie';
+    movieService.getProfitability = vi
+      .fn()
+      .mockImplementationOnce(() => 'PROFITABLE');
+
+    // when
+    const response = controller.getProfitability(movieName);
+
+    // then
+    expect(response).toBeDefined();
+    expect(movieService.getProfitability).toHaveBeenCalledWith('fakeMovie');
+    expect(response).toEqual('PROFITABLE');
+  });
 });
