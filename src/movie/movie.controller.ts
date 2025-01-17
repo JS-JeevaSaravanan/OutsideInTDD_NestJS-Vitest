@@ -14,4 +14,9 @@ export class MovieController {
   getProfitability(@Param('movieName') movieName: string) {
     return this.movieService.getProfitability(movieName);
   }
+
+  @Get('/:movieName/rating')
+  getRating(@Param('movieName') movieName: string) {
+    return this.movieService.getRating(movieName);
+  }
 }

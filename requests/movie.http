@@ -20,3 +20,13 @@ GET http://localhost:3000/movies/batman/profitability
 # difference > 100 => BLOCKBUSTER
 # difference > 0 => PROFITABLE
 # difference <= 0 => NON-PROFITABLE
+
+
+### Check the rating of a movie
+GET http://localhost:3000/movies/batman/rating
+
+# Rating limit (out of 10)
+# 0 to 10
+
+# actual return rating ( out of 5)
+# actual = current / 2

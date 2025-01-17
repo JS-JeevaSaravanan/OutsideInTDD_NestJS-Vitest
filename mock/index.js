@@ -7,10 +7,11 @@ app.get('/movies/tumbbad', (req, res) => {
     data: {
       meta: {
         name: req.params.name,
-        releasedOn: "2018-10-12T10:15:46.752Z",
+        releasedOn: '2018-10-12T10:15:46.752Z',
       },
       cast: { director: 'Rahil' },
       money: { made: 10, budget: 11 },
+      rating: 7.2,
     },
   });
 });
@@ -24,6 +25,7 @@ app.get('/movies/:name', (req, res) => {
       },
       cast: { director: faker.person.fullName() },
       money: { made: faker.finance.amount(), budget: faker.finance.amount() },
+      rating: faker.random.number({ min: 1, max: 10 }),
     },
   });
 });

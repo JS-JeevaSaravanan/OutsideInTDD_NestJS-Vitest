@@ -38,6 +38,14 @@ export class MovieService {
     }
   }
 
+  async getRating(movieName: string): Promise<{ rating: number }> {
+    let {
+      data: { rating },
+    } = await this.gateway.getMovie(movieName);
+    const actualRating = rating / 2;
+    return { rating: actualRating };
+  }
+
   private parse(movie) {
     const date = parseISO(movie.data.meta.releasedOn);
     return date;

@@ -21,6 +21,7 @@ describe('movie aggregator', () => {
               releasedOn: '1999-10-12T10:15:46.752Z',
             },
             money: { made: 12, budget: 11 },
+            rating: 8.8,
           },
         },
       },
@@ -54,5 +55,15 @@ describe('movie aggregator', () => {
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(response.body.profitability).toBe('PROFITABLE');
+  });
+
+  it.only('given a movie name, gives rating of the movie', async () => {
+    const movieName = 'batman';
+    const response = await request(app.getHttpServer()).get(
+      `/movies/${movieName}/rating`,
+    );
+    expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
+    expect(response.body.rating).toBe(4.4);
   });
 });
