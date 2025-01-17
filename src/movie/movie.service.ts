@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { MovieGateway } from './movie.gateway';
 import { parseISO } from 'date-fns';
 
+//! ToDo: Implement types for the return values
+
 @Injectable()
 export class MovieService {
   constructor(private gateway: MovieGateway) {}
@@ -20,16 +22,20 @@ export class MovieService {
   async getProfitability(
     movieName: string,
   ): Promise<{ profitability: string }> {
-    let movie = await this.gateway.getMovie(movieName);
-    const money = movie.data.money;
-    if (money.made > money.budget) {
-      return {
-        profitability: 'PROFITABLE',
-      };
+    let {
+      data: {
+        money: { made, budget },
+      },
+    } = await this.gateway.getMovie(movieName);
+
+    const profit = made - budget;
+    if (profit > 100) {
+      return { profitability: 'BLOCKBUSTER' };
+    } else if (profit > 0) {
+      return { profitability: 'PROFITABLE' };
+    } else {
+      return { profitability: 'NON-PROFITABLE' };
     }
-    return {
-      profitability: 'NON-PROFITABLE',
-    };
   }
 
   private parse(movie) {

@@ -150,4 +150,26 @@ describe('MovieService', () => {
     expect(gateway.getMovie).toHaveBeenCalledWith('fake');
     expect(response.profitability).toEqual('NON-PROFITABLE');
   });
+
+  it('should identify BLOCKBUSTER movie', async () => {
+    // given
+    const movieName = 'fake';
+    gateway.getMovie = vi.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        data: {
+          money: {
+            made: 200,
+            budget: 10,
+          },
+        },
+      }),
+    );
+
+    // when
+    const response = await service.getProfitability(movieName);
+
+    // then
+    expect(gateway.getMovie).toHaveBeenCalledWith('fake');
+    expect(response.profitability).toEqual('BLOCKBUSTER');
+  });
 });
