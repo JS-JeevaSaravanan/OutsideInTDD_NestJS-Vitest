@@ -28,7 +28,14 @@ describe('MovieGateway', () => {
     // given
     const movieName = 'fake';
     const mockResponse: AxiosResponse = {
-      data: {},
+      data: {
+        meta: {
+          name: 'fake',
+          releasedOn: '2018-10-12T10:15:46.752Z',
+        },
+        cast: { director: 'Rahil' },
+        money: { made: 10, budget: 11 },
+      },
       status: 200,
       statusText: 'OK',
       headers: {},
@@ -47,7 +54,14 @@ describe('MovieGateway', () => {
     expect(httpService.get).toHaveBeenCalledWith(
       'http://localhost:3001/movies/fake',
     );
-    expect(response).toEqual({});
+    expect(response).toEqual({
+      meta: {
+        name: 'fake',
+        releasedOn: '2018-10-12T10:15:46.752Z',
+      },
+      cast: { director: 'Rahil' },
+      money: { made: 10, budget: 11 },
+    });
   });
 
   afterEach(() => {
